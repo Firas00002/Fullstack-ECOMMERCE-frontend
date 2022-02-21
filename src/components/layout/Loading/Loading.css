@@ -1,0 +1,28 @@
+.Loading {
+    width: 100vw;
+  height: 100vh;
+  background-color: white;
+  display: grid;
+  place-items: center;
+  max-width: 100%;
+  }
+  .Loading:after {
+    content: " ";
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid rgb(201, 41, 41);
+    border-color: rgb(5, 5, 5) transparent rgb(0, 0, 0) transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

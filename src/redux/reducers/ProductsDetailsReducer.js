@@ -2,7 +2,7 @@ import { GET_ALLPRODUCTSDETAILS, GET_ALLPRODUCTSDETAILS_FAIL, GET_ALLPRODUCTSDET
 
 const initProductsDetails={
 loading:false,
-allproducts:null,
+product:{},
 errors:null
 }
 
@@ -21,14 +21,14 @@ errors:null
         };
       case GET_ALLPRODUCTSDETAILS_SUCCESS:
         return {
-          ...state,
+          
           loading: false,
-          allproducts: payload,
+          product: payload,
           errors: null,
         };
       case GET_ALLPRODUCTSDETAILS_FAIL:
         return {
-          ...state,
+          
           loading: false,
           errors: payload,
         };

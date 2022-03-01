@@ -1,35 +1,43 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import {Form,Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { loginUser } from '../redux/actions/usersActions';
+import registerUser from '../../redux/actions/usersActions'
+import {Redirect} from 'react-router-dom'
 
 
-const SignIn = () => {
-    const [email, setEmail] = useState ('');
+
+const Register = () => {
+     const [fullName, setFullName] = useState('');
+     const [email, setEmail] = useState('');
      const [password, setPassword] = useState('');
-     const dispatch =useDispatch();
-     const {loading,token}=useSelector(state=>state.usersReducer)
+     const {loading,users}=useSelector(state=>state.usersReducer)
+     const dispatch =useDispatch()
      const HandleClick =(e) =>{
          e.preventDefault();
          const newuser={
+             fullName,
              email,
              password,
          }
-         dispatch(loginUser(newuser));
+         dispatch(registerUser(newuser));
 
      }
 
-
-  return <div>
+  return <div className= 'bigdiv' >
       <Form>
-          {
-              loading? <h1>loading...</h1>
-              : token ? <Redirect to='/workspace' ></Redirect>
-              :
-              <>
-          
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+  
+  {
+   loading? <h1>.</h1>
+   :users? <Redirect to="/signIn" > </Redirect>
+   :
+  
+    <>
+  <Form.Group className="mb-3" controlId="formBasicfullName">
+    <Form.Label>FullName</Form.Label>
+    <Form.Control type="text" placeholder="FullName" value={fullName} onChange={(e)=>setFullName(e.target.value)}/>
+  </Form.Group>
+
+  <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label>Email address</Form.Label>
     <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
     <Form.Text className="text-muted">
@@ -45,10 +53,11 @@ const SignIn = () => {
   <Button variant="primary" type="submit" onClick={HandleClick}>
     Submit
   </Button>
+  
   </>
   }
-  </Form>
+</Form>
   </div>;
 };
 
-export default SignIn;
+export default Register;

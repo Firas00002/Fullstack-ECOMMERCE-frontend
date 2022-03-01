@@ -4,9 +4,10 @@ import { CgMouse } from "react-icons/cg";
 import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import {getProducts} from "../../../redux/actions/productsActions";
+import {clearErrors, getProducts} from "../../../redux/actions/productsActions";
 import ProductCard from "./ProductCard";
 import Loading from "../Loading/Loading";
+import { useAlert } from "react-alert";
 
 
 
@@ -22,15 +23,16 @@ import Loading from "../Loading/Loading";
 // };
 
 const Home = () => {
+ 
 
 const dispatch =useDispatch();
 
 const {loading,allproducts}=useSelector(state=>state.productsReducer)
 
 useEffect(() => {
-  dispatch(getProducts())
-}, [dispatch])
-
+  
+  dispatch(getProducts());
+}, [dispatch]);
 
   return (
     <>

@@ -38,7 +38,7 @@ export const loginUser =(user) => async(dispatch)=>{
 
     try {
         const {data} = await axios.post('/user/login',user);
-        
+        localStorage.setItem('token',data.token)
         dispatch({
             type:LOGIN_SUCCESS,
             payload:data
@@ -55,7 +55,7 @@ export const loginUser =(user) => async(dispatch)=>{
 
 
 export const getProfile =(token) => async(dispatch)=>{
-   
+    let token=localStorage.getItem('token')
     const config ={
         headers:{
             Authorization:token
@@ -69,10 +69,10 @@ export const getProfile =(token) => async(dispatch)=>{
     
     try {
      
-       const {data} = await axios.get('/user/auth',config);
+       const {data} = await axios.get('/user/me',config);
        dispatch({
            type:GET_PROFILE_SUCCESS,
-           payload:data
+           payload:data.user
        })
         
     } catch (error) {

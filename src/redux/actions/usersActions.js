@@ -1,6 +1,6 @@
 import axios from 'axios' 
 
-import { REGISTER, REGISTER_SUCCESS, REGISTER_FAIL, LOGIN, LOGIN_FAIL, LOGIN_SUCCESS, GET_PROFILE, GET_PROFILE_FAIL, GET_PROFILE_SUCCESS } from "../actionsTypes/usersActionsTypes";
+import { REGISTER, REGISTER_SUCCESS, REGISTER_FAIL, LOGIN, LOGIN_FAIL, LOGIN_SUCCESS, GET_PROFILE, GET_PROFILE_FAIL, GET_PROFILE_SUCCESS, GET_LOGOUT, GET_LOGOUT_SUCCESS, GET_LOGOUT_FAIL } from "../actionsTypes/usersActionsTypes";
 
 
  const registerUser =(newuser) => async(dispatch)=>{
@@ -78,6 +78,38 @@ export const getProfile =(token) => async(dispatch)=>{
     } catch (error) {
         dispatch({
             type:GET_PROFILE_FAIL,
+            payload:error.response.data
+        })
+    }
+}
+
+
+
+
+export const logoutUsers =(token) => async(dispatch)=>{
+    let token=localStorage.removeItem('token')
+    const config ={
+        headers:{
+            Authorization:token
+        }
+        
+    }
+    dispatch({
+        type:GET_LOGOUT,
+    })
+    
+    
+    try {
+     
+       await axios.get('/user/logout',config);
+       dispatch({
+           type:GET_LOGOUT_SUCCESS,
+           
+       })
+        
+    } catch (error) {
+        dispatch({
+            type:GET_LOGOUT_FAIL,
             payload:error.response.data
         })
     }

@@ -1,0 +1,5 @@
+export const ADD_TOCART = "ADD_TOCART";
+
+export const REMOVE_CART_ITEMS = "REMOVE_CART_ITEMS";
+
+export const SAVE_SHIPPING_INFO = "SAVE_SHIPPING_INFO";

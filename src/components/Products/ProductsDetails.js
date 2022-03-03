@@ -7,12 +7,33 @@ import "./ProductsDetails.css";
 import { Rating } from "@mui/material";
 import ReviewCard from "./ReviewCard";
 import Loading from "../layout/Loading/Loading";
+import { useState } from "react";
+import { addItemsToCart } from "../../redux/actions/cartActions";
 
 const ProductsDetails = ({ match }) => {
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const { loading, product } = useSelector(
     (state) => state.productsDetailsReducer
   );
+  const increaseQuantity = () => {
+    if (product.stock <= quantity) return;
+
+    const qty = quantity + 1;
+    setQuantity(qty);
+  };
+
+  const decreaseQuantity = () => {
+    if (1 >= quantity) return;
+
+    const qty = quantity - 1;
+    setQuantity(qty);
+  };
+
+  const addToCartHandler = () => {
+    dispatch(addItemsToCart(match.params.id, quantity));
+    
+  };
 
   useEffect(() => {
     dispatch(getProductsDetails(match.params.id));
@@ -59,11 +80,11 @@ const ProductsDetails = ({ match }) => {
                 <h1>{`${product.price}$`}</h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
-                    <button>-</button>
-                    <input readOnly type="number" value={0} />
-                    <button>+</button>
+                    <button onClick={decreaseQuantity}>-</button>
+                    <input readOnly type="number" value={quantity} />
+                    <button onClick={increaseQuantity}>+</button>
                   </div>
-                  <button disabled={product.stock < 1 ? true : false}>
+                  <button onClick={addToCartHandler}>
                     Add to Cart
                   </button>
                 </div>

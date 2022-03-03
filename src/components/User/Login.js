@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import EmailIcon from '@mui/icons-material/Email';
+import "./SignUp.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { loginUser } from '../../redux/actions/usersActions';
-
-
-const Login = () => {
-    const [email, setEmail] = useState ('');
+import { useEffect } from 'react';
+import Loading from '../layout/Loading/Loading';
+const Login = ({history, location}) => {
+  const [email, setEmail] = useState ('');
      const [password, setPassword] = useState('');
      const dispatch =useDispatch();
-     const {loading,token}=useSelector(state=>state.usersReducer)
-     const HandleClick =(e) =>{
+     const {loading,token,isAuth}=useSelector(state=>state.usersReducer)
+     const loginSubmit =(e) =>{
          e.preventDefault();
          const newuser={
              email,
@@ -20,35 +22,55 @@ const Login = () => {
 
      }
 
+     const redirect = location.search ? location.search.split("=")[1] : "/account";
 
-  return <div>
-      <Form>
-          {
-              loading? <h1>loading...</h1>
-              : token ? <Redirect to='/products' ></Redirect>
-              :
-              <>
-          
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Label>Email address</Form.Label>
-    <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-    <Form.Text className="text-muted">
-      We'll never share your email with anyone else.
-    </Form.Text>
-  </Form.Group>
+  useEffect(() => {
+    
+    if (isAuth) {
+      history.push(redirect);
+    }
+  }, [ history, isAuth, redirect]);
+     
 
-  <Form.Group className="mb-3" controlId="formBasicPassword">
-    <Form.Label>Password</Form.Label>
-    <Form.Control type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
-  </Form.Group>
+  return (
+    <>
+    {loading?<Loading />:
+    <>
+    <div className="LoginSignUpContainer">
+            <div className="LoginSignUpBox">
+            <div className="login_signUp_toggle">
+                  <p >LOGIN</p>
+                  
+                </div>
+    <form className="loginForm"  onSubmit={loginSubmit}>
+                <div className="loginEmail">
+                  <EmailIcon />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="loginPassword">
+                  <LockOpenIcon />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <Link to="/password/forgot">Forget Password ?</Link>
+                <input type="submit" value="Login" className="loginBtn" />
+              </form>
+              </div>
+              </div>
+    </>}
+    </>
+  )
+}
 
-  <Button variant="primary" type="submit" onClick={HandleClick}>
-    Submit
-  </Button>
-  </>
-  }
-  </Form>
-  </div>;
-};
-
-export default Login;
+export default Login

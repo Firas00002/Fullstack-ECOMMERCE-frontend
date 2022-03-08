@@ -3,7 +3,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import EmailIcon from '@mui/icons-material/Email';
 import "./SignUp.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { loginUser } from '../../redux/actions/usersActions';
 import { useEffect } from 'react';
 import Loading from '../layout/Loading/Loading';
@@ -11,7 +11,7 @@ const Login = ({history, location}) => {
   const [email, setEmail] = useState ('');
      const [password, setPassword] = useState('');
      const dispatch =useDispatch();
-     const {loading,token,isAuth}=useSelector(state=>state.usersReducer)
+     const {loading,isAuth}=useSelector(state=>state.usersReducer)
      const loginSubmit =(e) =>{
          e.preventDefault();
          const newuser={

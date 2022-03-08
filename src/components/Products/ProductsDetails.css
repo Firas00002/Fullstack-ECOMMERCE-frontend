@@ -145,7 +145,7 @@
     flex-direction: column;
   }
   .submitDialogTextArea {
-    border: 1px solid rgba(0, 0, 0, 0.082);
+    border: 1px solid black;
     margin: 1vmax 0;
     outline: none;
     padding: 1rem;

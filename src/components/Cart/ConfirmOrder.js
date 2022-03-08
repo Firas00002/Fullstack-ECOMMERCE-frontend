@@ -14,7 +14,7 @@ const ConfirmOrder = ({history}) => {
     0
   );
 
-  const shippingCharges = subtotal > 1000 ? 0 : 200;
+  const shippingCharges = 7
 
   const tax = subtotal * 0.18;
 

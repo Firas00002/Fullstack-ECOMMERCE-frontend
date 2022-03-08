@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import {Form,Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import registerUser from '../../redux/actions/usersActions'
 import {Redirect} from 'react-router-dom'

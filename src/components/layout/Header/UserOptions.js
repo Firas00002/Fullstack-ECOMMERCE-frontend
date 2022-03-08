@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Backdrop from "@material-ui/core/Backdrop";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-const UserOptions = ({users}) => {
+const UserOptions = ({user}) => {
   const {cartItems} = useSelector((state) => state.cart);
+  
   const dispatch=useDispatch()
     const [open, setOpen] = useState(false);
     const history = useHistory();
@@ -33,7 +34,7 @@ const UserOptions = ({users}) => {
     
       ];
 
-      if (users.role === "admin") {
+      if (user.role === "admin") {
         options.unshift({
           icon: <DashboardIcon />,
           name: "Dashboard",
@@ -72,7 +73,7 @@ const UserOptions = ({users}) => {
     icon={
         <img
           className="speedDialIcon"
-          src={users.avatar.url ? users.avatar.url : "/Profile.png"}
+          src={user.avatar.url ? user.avatar.url : "/Profile.png"}
           alt="Profile"
         />
       }

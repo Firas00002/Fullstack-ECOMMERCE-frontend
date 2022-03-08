@@ -23,6 +23,7 @@ import { ADD_TOCART, REMOVE_CART_ITEMS, SAVE_SHIPPING_INFO } from "../actionsTyp
                 if (isItemExist) {
                   return {
                     ...state,
+                    
                     cartItems: state.cartItems.map((i) =>
                       i.product === isItemExist.product ? item : i
                     ),

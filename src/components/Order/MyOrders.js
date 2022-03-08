@@ -13,7 +13,7 @@ const MyOrders = () => {
   
     
   
-    const { loading, orders } = useSelector((state) => state.myOrders);
+    const { loading, orders } = useSelector((state) => state.ordersReducer);
     const { users } = useSelector(state=>state.usersReducer);
   
     const columns = [

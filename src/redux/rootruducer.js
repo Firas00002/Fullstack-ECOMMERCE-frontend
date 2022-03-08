@@ -3,9 +3,10 @@ import productsReducer from './reducers/productsReducer';
 import {combineReducers} from 'redux'
 import productsDetailsReducer from './reducers/ProductsDetailsReducer'
 import cartReducer from './reducers/cartReducer';
-import { myOrdersReducer, newOrderReducer } from './reducers/ordersReducer';
+import ordersReducer from './reducers/ordersReducer'
+import allUsersReducer from './reducers/allUsersReducer'
 
-const rootReducers = combineReducers({usersReducer,productsReducer,productsDetailsReducer,cart:cartReducer,newOrders:newOrderReducer,myOrders:myOrdersReducer})
+const rootReducers = combineReducers({usersReducer,productsReducer,productsDetailsReducer,cart:cartReducer,ordersReducer,allUsersReducer})
 
 
 

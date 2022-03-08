@@ -17,6 +17,7 @@ const usersReducer = (state = init, { type, payload }) => {
         ...state,
         loading: true,
         
+        
       };
     case REGISTER_SUCCESS:
       return {
@@ -33,7 +34,7 @@ const usersReducer = (state = init, { type, payload }) => {
         errors:null,
         users:payload.user,
         token:payload.token,
-        
+        isAuth:true
         
         
 
@@ -52,6 +53,7 @@ const usersReducer = (state = init, { type, payload }) => {
           isAuth:true,
           users:payload,
           
+          
         }
     case REGISTER_FAIL:
     case LOGIN_FAIL: 
@@ -62,6 +64,7 @@ const usersReducer = (state = init, { type, payload }) => {
         loading: false,
         errors: payload,
         
+        
       };
 
     default:
@@ -70,3 +73,4 @@ const usersReducer = (state = init, { type, payload }) => {
 };
 
 export default usersReducer;
+

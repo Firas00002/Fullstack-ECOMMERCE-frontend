@@ -6,7 +6,14 @@ import { ADD_TOCART, REMOVE_CART_ITEMS, SAVE_SHIPPING_INFO } from '../actionsTyp
 // ADD To CART
 
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/allproducts/products/${id}`);
+  let token=localStorage.getItem('token')
+    const config ={
+        headers:{
+            Authorization:token
+        }
+        
+    }
+    const { data } = await axios.get(`/allproducts/products/${id}`,config);
   
     dispatch({
       type: ADD_TOCART,

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsDetails } from "../../redux/actions/productsActions";
+import { getProductsDetails, newReview } from "../../redux/actions/productsActions";
 import "./ProductsDetails.css";
 
 import { Rating } from "@mui/material";
@@ -9,12 +9,32 @@ import ReviewCard from "./ReviewCard";
 import Loading from "../layout/Loading/Loading";
 import { useState } from "react";
 import { addItemsToCart } from "../../redux/actions/cartActions";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from "@material-ui/core";
+import { NEW_REVIEW_RESET } from "../../redux/actionsTypes/productsActionsTypes";
+
+import { Redirect } from "react-router-dom";
 
 const ProductsDetails = ({ match }) => {
+  const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const { loading, product } = useSelector(
     (state) => state.productsDetailsReducer
+  );
+  const { success } = useSelector(
+    (state) => state.productsReducer
+  );
+
+  const { users } = useSelector(
+    (state) => state.usersReducer
   );
   const increaseQuantity = () => {
     if (product.stock <= quantity) return;
@@ -31,13 +51,36 @@ const ProductsDetails = ({ match }) => {
   };
 
   const addToCartHandler = () => {
+    
     dispatch(addItemsToCart(match.params.id, quantity));
+    
     
   };
 
+
+  const submitReviewToggle = () => {
+    open ? setOpen(false) : setOpen(true);
+  };
+
+  const reviewSubmitHandler = () => {
+    const myForm = new FormData();
+
+    myForm.set("rating", rating);
+    myForm.set("comment", comment);
+    myForm.set("productId", match.params.id);
+
+    dispatch(newReview(myForm));
+
+    setOpen(false);
+  };
+
   useEffect(() => {
+    if (success) {
+      alert("Review Submitted Successfully");
+      dispatch({ type: NEW_REVIEW_RESET });
+    }
     dispatch(getProductsDetails(match.params.id));
-  }, [dispatch, match.params.id]);
+  }, [dispatch, match.params.id,success,]);
 
   const options = {
     size: "meduim",
@@ -47,10 +90,7 @@ const ProductsDetails = ({ match }) => {
   };
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
+      {loading?<Loading/> : !users ?<Redirect to='/login' />:<>
           <div className="ProductDetails">
             <div>
               {product.images &&
@@ -100,10 +140,41 @@ const ProductsDetails = ({ match }) => {
                 Description : <p>{product.description}</p>
               </div>
 
-              <button className="submitReview">Submit Review</button>
+              <button onClick={submitReviewToggle} className="submitReview">Submit Review</button>
             </div>
           </div>
           <h3 className="reviewsHeading">REVIEWS</h3>
+          <Dialog
+            aria-labelledby="simple-dialog-title"
+            open={open}
+            onClose={submitReviewToggle}
+          >
+            <DialogTitle>Submit Review</DialogTitle>
+            <DialogContent className="submitDialog">
+              <Rating
+                onChange={(e) => setRating(e.target.value)}
+                value={rating}
+                size="large"
+              />
+
+              <textarea
+                className="submitDialogTextArea"
+                cols="30"
+                rows="5"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              ></textarea>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={submitReviewToggle} color="secondary">
+                Cancel
+              </Button>
+              <Button onClick={reviewSubmitHandler} color="primary">
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+
 
           {product.reviews && product.reviews[0] ? (
             <div className="reviews">
@@ -115,8 +186,7 @@ const ProductsDetails = ({ match }) => {
           ) : (
             <p className="noReviews">No Reviews Yet</p>
           )}
-        </>
-      )}
+        </>}
     </>
   );
 };

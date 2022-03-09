@@ -31,6 +31,7 @@ import OrderList from './components/admin/OrderList';
 import ProcessOrder from './components/admin/ProcessOrder';
 import UsersList from './components/admin/UsersList';
 import UpdateUser from './components/admin/UpdateUser';
+import Contact from './components/layout/Contact/Contact';
 
 
 
@@ -72,6 +73,7 @@ function App() {
         <Route exact path="/search" component={Search} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/contact" component={Contact} />
         <ProductedRoute exact path="/account" component={Account} />
         <Route exact path="/cart" component={Cart} />
         <ProductedRoute exact path="/shipping" component={Shipping} />

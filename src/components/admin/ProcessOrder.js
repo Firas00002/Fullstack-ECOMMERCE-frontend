@@ -82,14 +82,14 @@ const ProcessOrder = ({match}) => {
                         className={
                             myOrder.paymentInfo &&
                             myOrder.paymentInfo.status === "succeeded"
-                            ? "greenColor"
-                            : "redColor"
+                            ? "redColor"
+                            : "greenColor"
                         }
                       >
                         {myOrder.paymentInfo &&
                         myOrder.paymentInfo.status === "succeeded"
-                          ? "PAID"
-                          : "NOT PAID"}
+                          ? "NOT PAID"
+                          :"PAID" }
                       </p>
                     </div>
 
@@ -125,8 +125,8 @@ const ProcessOrder = ({match}) => {
                             {item.name}
                           </Link>{" "}
                           <span>
-                            {item.quantity} X ₹{item.price} ={" "}
-                            <b>₹{item.price * item.quantity}</b>
+                            {item.quantity} X {item.price}$ ={" "}
+                            <b>{item.price * item.quantity}$</b>
                           </span>
                         </div>
                       ))}
